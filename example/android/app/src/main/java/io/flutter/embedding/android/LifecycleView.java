@@ -210,4 +210,9 @@ public class LifecycleView extends FrameLayout implements LifecycleOwner, Flutte
   public void onFlutterUiNoLongerDisplayed() {
     // Hook for subclasses.
   }
+  @Override
+  public void updateSystemUiOverlays() {
+    mDelegate.updateSystemUiOverlays();
+  }
+
 }
