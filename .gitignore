@@ -18,3 +18,5 @@ example/android/app/.project
 example/android/.project
 flutter_boost
 .flutter-plugins-dependencies
+example/ios/.symlinks/plugins/webview_flutter
+example/ios/Runner.xcworkspace/xcuserdata/mac_bigsur.xcuserdatad/UserInterfaceState.xcuserstate

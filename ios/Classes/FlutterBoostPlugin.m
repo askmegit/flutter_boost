@@ -46,29 +46,24 @@
 }
 
 - (void)containerWillAppear:(id<FBFlutterContainer>)vc {
-//
     FBCommonParams* params = [[FBCommonParams alloc] init];
     params.pageName = vc.name;
     params.arguments = vc.params;
     params.uniqueId = vc.uniqueId;
     params.opaque = [[NSNumber alloc] initWithBool:vc.opaque];
 
-    [self.containerManager activeContainer:vc forUniqueId:vc.uniqueIDString];
     [self.flutterApi pushRoute: params completion:^(NSError * e) {
-        FBCommonParams* params = [[FBCommonParams alloc] init];
-        params.uniqueId = vc.uniqueId;
-        [self.flutterApi onContainerShow:params completion:^(NSError * e) {
-          
-        }];
+
     }];
-   
+    [self.containerManager activeContainer:vc forUniqueId:vc.uniqueIDString];
 }
 
 - (void)containerAppeared:(id<FBFlutterContainer>)vc {
-    
-   
+    FBCommonParams* params = [[FBCommonParams alloc] init];
+    params.uniqueId = vc.uniqueId;
+    [self.flutterApi onContainerShow:params completion:^(NSError * e) {
 
-    
+    }];
 }
 
 - (void)containerDisappeared:(id<FBFlutterContainer>)vc {
