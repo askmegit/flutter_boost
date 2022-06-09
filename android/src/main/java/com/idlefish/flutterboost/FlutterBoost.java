@@ -7,7 +7,9 @@ import android.os.Bundle;
 import com.idlefish.flutterboost.containers.FlutterContainerManager;
 import com.idlefish.flutterboost.containers.FlutterViewContainer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.flutter.embedding.android.FlutterEngineProvider;
@@ -96,7 +98,7 @@ public class FlutterBoost {
     }
 
     /**
-     *  Releases the engine resource.
+     * Releases the engine resource.
      */
     public void tearDown() {
         FlutterEngine engine = getEngine();
@@ -217,7 +219,7 @@ public class FlutterBoost {
     public void close(String uniqueId) {
         Messages.CommonParams params = new Messages.CommonParams();
         params.setUniqueId(uniqueId);
-        this.getPlugin().popRoute(params,new Messages.Result<Void>(){
+        this.getPlugin().popRoute(params, new Messages.Result<Void>() {
             @Override
             public void success(Void result) {
 
@@ -269,8 +271,12 @@ public class FlutterBoost {
         sendEventToFlutter(APP_LIFECYCLE_CHANGED_KEY, arguments);
     }
 
+    ///这里有点问题
+    ///因为会延迟初始化,则会导致这里记录不准确
     private class BoostActivityLifecycle implements Application.ActivityLifecycleCallbacks {
         private int activityReferences = 0;
+        ///新增用来记录打开过的ac
+        private List<String> openedActivityList = new ArrayList<>();
         private boolean isActivityChangingConfigurations = false;
         private boolean isBackForegroundEventOverridden = false;
 
@@ -303,7 +309,11 @@ public class FlutterBoost {
 
         @Override
         public void onActivityStarted(Activity activity) {
-            if (++activityReferences == 1 && !isActivityChangingConfigurations) {
+            if (!openedActivityList.contains(activity.toString())) {
+                openedActivityList.add(activity.toString());
+            }
+            activityReferences = openedActivityList.size();
+            if (activityReferences == 1 && !isActivityChangingConfigurations) {
                 // App enters foreground
                 dispatchForegroundEvent();
             }
@@ -320,8 +330,14 @@ public class FlutterBoost {
 
         @Override
         public void onActivityStopped(Activity activity) {
+            ///如果包含有打开则计算在内
+            if (openedActivityList.contains(activity.toString())) {
+                openedActivityList.remove(activity.toString());
+            }
+            activityReferences = openedActivityList.size();
+
             isActivityChangingConfigurations = activity.isChangingConfigurations();
-            if (--activityReferences == 0 && !isActivityChangingConfigurations) {
+            if (activityReferences == 0 && !isActivityChangingConfigurations) {
                 // App enters background
                 dispatchBackgroundEvent();
             }
