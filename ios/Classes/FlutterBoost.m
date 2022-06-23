@@ -93,9 +93,19 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationDidBecomeActive:)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidEnterBackground:)
                                                  name:UIApplicationDidEnterBackgroundNotification
                                                object:nil];
+    
+   
+
+
     
 }
 
@@ -186,8 +196,11 @@
     }];
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application {
+-(void)applicationDidBecomeActive:(UIApplication *)application{
     [self.plugin refreshTopContainer];
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
     FBCommonParams* params = [[FBCommonParams alloc] init];
     [self.plugin.flutterApi onForeground:params completion:^(NSError * error) {
         
@@ -213,6 +226,7 @@
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
     
 }
 
