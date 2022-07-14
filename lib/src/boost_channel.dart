@@ -47,19 +47,21 @@ class BoostChannel {
 
   /// enable iOS native pop gesture for container matching [containerId]
   void enablePopGesture({@required String containerId}) {
-    assert(containerId != null && containerId.isNotEmpty);
-    BoostChannel.instance.sendEventToNative(containerId, {
-      'event': 'enablePopGesture',
-      "args": {'enable': true}
-    });
+    /// 业务方自己来处理
+    // assert(containerId != null && containerId.isNotEmpty);
+    // BoostChannel.instance.sendEventToNative(containerId, {
+    //   'event': 'enablePopGesture',
+    //   "args": {'enable': true}
+    // });
   }
 
   /// disable iOS native pop gesture for container matching [containerId]
+  /// 业务方自己来处理
   void disablePopGesture({@required String containerId}) {
-    assert(containerId != null && containerId.isNotEmpty);
-    BoostChannel.instance.sendEventToNative(containerId, {
-      'event': 'enablePopGesture',
-      "args": {'enable': false}
-    });
+    // assert(containerId != null && containerId.isNotEmpty);
+    // BoostChannel.instance.sendEventToNative(containerId, {
+    //   'event': 'enablePopGesture',
+    //   "args": {'enable': false}
+    // });
   }
 }

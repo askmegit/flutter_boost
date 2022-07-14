@@ -27,7 +27,7 @@
 #import "FBFlutterContainer.h"
 
 @interface FBFlutterViewContainer : FlutterViewController<FBFlutterContainer>
-@property (nonatomic,copy,readwrite) NSString *name;
+
 @property (nonatomic, strong) NSNumber *disablePopGesture;
 - (instancetype)init;
 - (void)surfaceUpdated:(BOOL)appeared;

@@ -72,6 +72,7 @@ _Pragma("clang diagnostic pop")
 @interface FBFlutterViewContainer ()
 @property (nonatomic,strong,readwrite) NSDictionary *params;
 @property (nonatomic,copy) NSString *uniqueId;
+@property (nonatomic,copy,readwrite) NSString *name;
 @property (nonatomic, copy) NSString *flbNibName;
 @property (nonatomic, strong) NSBundle *flbNibBundle;
 @property(nonatomic, assign) BOOL opaque;
