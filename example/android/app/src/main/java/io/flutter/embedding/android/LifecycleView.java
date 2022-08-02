@@ -14,6 +14,8 @@ import androidx.lifecycle.LifecycleRegistry;
 
 import com.idlefish.flutterboost.FlutterBoostUtils;
 
+import java.util.List;
+
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.embedding.engine.FlutterShellArgs;
 import io.flutter.plugin.platform.PlatformPlugin;
@@ -140,6 +142,18 @@ public class LifecycleView extends FrameLayout implements LifecycleOwner, Flutte
     return getArguments().getString(ARG_DART_ENTRYPOINT, "main");
   }
 
+  @Nullable
+  @Override
+  public String getDartEntrypointLibraryUri() {
+    return null;
+  }
+
+  @Nullable
+  @Override
+  public List<String> getDartEntrypointArgs() {
+    return null;
+  }
+
   @NonNull
   public String getAppBundlePath() {
     return getArguments().getString(ARG_APP_BUNDLE_PATH, FlutterMain.findAppBundlePath());
@@ -163,6 +177,11 @@ public class LifecycleView extends FrameLayout implements LifecycleOwner, Flutte
         getArguments()
             .getString(ARG_FLUTTERVIEW_TRANSPARENCY_MODE, TransparencyMode.transparent.name());
     return TransparencyMode.valueOf(transparencyModeName);
+  }
+
+  @Override
+  public ExclusiveAppComponent<Activity> getExclusiveAppComponent() {
+    return null;
   }
 
   @Nullable
@@ -213,6 +232,11 @@ public class LifecycleView extends FrameLayout implements LifecycleOwner, Flutte
   @Override
   public void updateSystemUiOverlays() {
     mDelegate.updateSystemUiOverlays();
+  }
+
+  @Override
+  public boolean shouldDispatchAppLifecycleState() {
+    return false;
   }
 
 }
