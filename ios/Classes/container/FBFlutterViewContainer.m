@@ -274,10 +274,9 @@ _Pragma("clang diagnostic pop")
     //For new page we should attach flutter view in view will appear
     //for better performance.
     [self attatchFlutterEngine];
-    
-    [super bridge_viewWillAppear:animated];
     [self.view setNeedsLayout];//TODO:通过param来设定
-    
+    [self.view layoutIfNeeded];
+    [super bridge_viewWillAppear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated
