@@ -268,14 +268,13 @@ _Pragma("clang diagnostic pop")
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    
-    [FB_PLUGIN containerWillAppear:self];
     //For new page we should attach flutter view in view will appear
     //for better performance.
     [self attatchFlutterEngine];
     [self.view setNeedsLayout];//TODO:通过param来设定
     [self.view layoutIfNeeded];
     [super bridge_viewWillAppear:animated];
+    [FB_PLUGIN containerWillAppear:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated
