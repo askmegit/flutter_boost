@@ -61,6 +61,8 @@ class FlutterBoostAppState extends State<FlutterBoostApp> {
   /// All interceptors from widget
   List<BoostInterceptor> get interceptors => widget.interceptors;
 
+  List<BoostContainer> get containers => _containers;
+
   BoostContainer? get topContainer =>
       _containers.isNotEmpty ? _containers.last : null;
 
